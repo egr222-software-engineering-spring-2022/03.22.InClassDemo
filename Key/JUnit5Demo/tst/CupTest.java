@@ -14,6 +14,15 @@ class CupTest {
     }
 
     @Test
+    void testObjectCreationUsingAssertAll() {
+        Cup cup = new Cup("Water",85.0);
+        assertAll("Test Object Creation",
+                () -> assertEquals("Water", cup.getLiquidType()),
+                () -> assertEquals(85.0, cup.getPercentFull(), 0.001)
+        );
+    }
+
+    @Test
     void testIsEmpty() {
         Cup cup = new Cup("Water",85.0);
         assertFalse(cup.isEmpty());
@@ -25,6 +34,23 @@ class CupTest {
         cup.setLiquidType(null);
         assertNotNull(cup.getLiquidType());
 
+    }
+
+    @Test
+    void testSetLiquidTypeToCoke() {
+        Cup cup = new Cup("Water",85.0);
+        cup.setLiquidType("Coke");
+        assertEquals("Coke",cup.getLiquidType(), "Setting liquid type to \"Coke\"");
+
+    }
+
+    @Test
+    void testSetPercentFullToNegativeOne() {
+        Cup cup = new Cup("Water",85.0);
+        assertThrows(IllegalArgumentException.class,
+                () -> cup.setPercentFull(-1),
+                "Setting percent full to -1"
+        );
     }
 
     @Disabled("Disable test until outside team completes update")
@@ -52,5 +78,4 @@ class CupTest {
         );
 
     }
-
 }
